@@ -16,11 +16,9 @@ export const ProductProvider = ({ children }) => {
     const existingItemIndex = cartItems.findIndex((item) => item.name === product.name);
 
     if (existingItemIndex !== -1) {
-      // Product with the same name exists in the cart
       const updatedCartItems = [...cartItems];
       const existingItem = updatedCartItems[existingItemIndex];
 
-      // Update the quantity for the corresponding size
       for (const size in product.quantity) {
         if (product.quantity.hasOwnProperty(size)) {
           existingItem.quantity[size] = (existingItem.quantity[size] || 0) + product.quantity[size];
@@ -29,7 +27,6 @@ export const ProductProvider = ({ children }) => {
 
       setCartItems(updatedCartItems);
     } else {
-      // Product with a new name, add it to the cart
       setCartItems([...cartItems, product]);
     }
   };

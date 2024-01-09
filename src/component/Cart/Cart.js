@@ -5,7 +5,7 @@ import { useProductContext } from '../Store/ProductContext';
 import "./Cart.css";
 
 const Cart = (props) => {
-  const { cartItems, calculateTotalPrice  } = useProductContext();
+  const { cartItems, calculateTotalPrice } = useProductContext();
 
   return (
     <Modal onClose={props.onClose} className="cart">
@@ -16,11 +16,11 @@ const Cart = (props) => {
           ))}
         </ul>
         <div className='price'>
-        <span>Total Price:  <span className='total-price'>${calculateTotalPrice ()}</span></span>
+          <span>Total Price:  <span className='total-price'>${calculateTotalPrice()}</span></span>
         </div>
         <div className='button-price'>
-        <button className='button-price1'>Place Order</button>
-        <button className='button-price2' onClick={props.onClose}>Cancel</button>
+          <button className='button-price1'>Place Order</button>
+          <button className='button-price2' onClick={props.onClose}>Cancel</button>
         </div>
       </div>
     </Modal>

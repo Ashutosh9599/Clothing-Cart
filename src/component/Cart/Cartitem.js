@@ -9,7 +9,7 @@ const Cartitem = ({ item }) => {
         {Object.entries(item.quantity).map(([size, quantity]) => (
           <samp className="cart-item3" key={size}><samp className="amount">x {quantity}</samp>{size}</samp>
         ))}
-        
+
         <samp className="cart-item2">${item.price}</samp>
       </div>
     </li>

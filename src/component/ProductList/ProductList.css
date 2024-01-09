@@ -1,59 +1,60 @@
-/* ProductList.css */
-
 .table-container {
-    margin: 20px;
-    border: 1px #ccc;
-    border-radius: 14px;
-    box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  border: 1px #ccc;
+  border-radius: 14px;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.1);
 
-  }
-  
-  .product-table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .product-table th, .product-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .product-table th {
-    background-color: #fff; /* White background for header */
-    color: #333; /* Dark text color for header */
-  }
-  
-  .product-table tbody {
-    background-color: #fff; /* Permanent white background for tbody */
-  }
-  
-  .no-products {
-    text-align: center;
-    padding: 20px;
-    color: #555;
-    font-style: italic;
-  }
-  
-  /* Optional: Add hover effect to rows */
-  .product-table tbody tr:hover {
-    background-color: #f5f5f5; /* Light grey background on hover */
-  }
-  .td-price{
-    color: rgb(224, 13, 13);
-    font-weight: bold;
-  }
-  .button{
-    padding: 8px 15px;
-    background-color: #1cc6e4;
-    width: 120px;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .button:hover {
-    background-color: #16a1b9;
-  }
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+  background-color: #fff;
+  color: #333;
+}
+
+.product-table tbody {
+  background-color: #fff;
+}
+
+.no-products {
+  text-align: center;
+  padding: 20px;
+  color: #555;
+  font-style: italic;
+}
+
+.product-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.td-price {
+  color: rgb(224, 13, 13);
+  font-weight: bold;
+}
+
+.button {
+  padding: 8px 15px;
+  background-color: #1cc6e4;
+  width: 120px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #16a1b9;
+}

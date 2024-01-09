@@ -9,7 +9,7 @@ const ClothingHeader = (props) => {
   return (
     <header className="header">
       <h1>Clothing APP</h1>
-      <button  className="cart-button" onClick={props.onShowCart}>
+      <button className="cart-button" onClick={props.onShowCart}>
         <span className='cart-icon'><FontAwesomeIcon icon={faShoppingCart} /></span>
         <span className="cart-name">Your Cart</span>
         <span className="cart-count">{calculateTotalQuantity()}</span>
