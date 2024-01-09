@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './ProductForm.css'; // Create a CSS file for styling if needed
+import './ProductForm.css'; 
+import { useProductContext } from '../Store/ProductContext';
 
 const ProductForm = () => {
+  const { addProduct } = useProductContext();
+
   const [productData, setProductData] = useState({
     name: '',
     description: '',
@@ -35,7 +38,7 @@ const ProductForm = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
     // Perform action with the product data like sending to an API
-    console.log('Product data:', productData);
+    addProduct(productData);
     // Reset form after submission
     setProductData({
       name: '',
@@ -48,6 +51,7 @@ const ProductForm = () => {
       },
     });
   };
+
 
   return (
     <div className="product-form">

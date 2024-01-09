@@ -1,27 +1,59 @@
 import React from 'react';
-import './ProductList.css'; // Import your CSS file for styling
+import { useProductContext } from '../Store/ProductContext';
+import './ProductList.css';
 
-const ProductList = ({ products }) => {
+const ProductList = () => {
+  const { productData, addToCart } = useProductContext();
+
+  const addToCartHandler = (productIndex, size) => {
+    const updatedProductData = [...productData];
+    const selectedProduct = updatedProductData[productIndex];
+
+    if (selectedProduct.quantity[size] > 0) {
+      selectedProduct.quantity[size] -= 1;
+
+      const cartItem = {
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        quantity: { [size]: 1 },
+      };
+
+      addToCart(cartItem);
+    }
+  };
+
   return (
-    <div className="product-list">
-      <h2>Product List</h2>
-      <ul className="products">
-        {products.map((product, index) => (
-          <li key={index} className="product-item">
-            <h3>{product.name}</h3>
-            <p>Description: {product.description}</p>
-            <p>Price: ${product.price}</p>
-            <div className="quantities">
-              <h4>Available Quantities:</h4>
-              <div className="quantity-buttons">
-                <button>Size L: {product.quantity.L}</button>
-                <button>Size M: {product.quantity.M}</button>
-                <button>Size S: {product.quantity.S}</button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className='table-container'>
+      <table className='product-table'>
+      <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity (L)</th>
+            <th>Quantity (M)</th>
+            <th>Quantity (S)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {productData && productData.length > 0 ? (
+            productData.map((product, index) => (
+              <tr key={index}>
+                <td>{product.name}</td>
+                <td>{product.description}</td>
+                <td className='td-price'>${product.price}</td>
+                <td><button className='button' onClick={() => addToCartHandler(index, 'L')}>{product.quantity.L}</button></td>
+                <td><button className='button' onClick={() => addToCartHandler(index, 'M')}>{product.quantity.M}</button></td>
+                <td><button className='button' onClick={() => addToCartHandler(index, 'S')}>{product.quantity.S}</button></td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" className="no-products">No products submitted yet.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

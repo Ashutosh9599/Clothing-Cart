@@ -1,0 +1,27 @@
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #1d9dad;
+  padding: 0, 12rem 0;
+  margin: 1rem 0;
+}
+
+.cart-item1 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 24px;
+}
+
+.cart-item2 {
+  font-size: large;
+  color: rgb(224, 13, 13);
+  font-weight: bold;
+}
+
+.amount {
+  font-weight: bold;
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  color: #363636;
+}
