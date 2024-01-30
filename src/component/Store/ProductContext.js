@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const ProductContext = createContext();
 
@@ -8,26 +8,112 @@ export const ProductProvider = ({ children }) => {
   const [productData, setProductData] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
-  const addProduct = (data) => {
-    setProductData([...productData, data]);
-  };
-
-  const addToCart = (product) => {
-    const existingItemIndex = cartItems.findIndex((item) => item.name === product.name);
-
-    if (existingItemIndex !== -1) {
-      const updatedCartItems = [...cartItems];
-      const existingItem = updatedCartItems[existingItemIndex];
-
-      for (const size in product.quantity) {
-        if (product.quantity.hasOwnProperty(size)) {
-          existingItem.quantity[size] = (existingItem.quantity[size] || 0) + product.quantity[size];
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const response = await fetch('https://crudcrud.com/api/1e9283a4cbdb4512967b3e7db9342a05/addproduct');
+        if (!response.ok) {
+          throw new Error('Failed to fetch product data');
         }
+        const data = await response.json();
+        setProductData(data);
+      } catch (error) {
+        console.error('Error fetching product data:', error);
+      }
+    };
+    fetchProductData();
+  }, []);
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await fetch('https://crudcrud.com/api/1e9283a4cbdb4512967b3e7db9342a05/cart');
+        if (!response.ok) {
+          throw new Error('Failed to fetch cart data');
+        }
+        const data = await response.json();
+        setCartItems(data);
+      } catch (error) {
+        console.error('Error fetching cart data:', error);
+      }
+    };
+    fetchCartData();
+  }, []);
+
+  const addProduct = async (product) => {
+    try {
+      const response = await fetch('https://crudcrud.com/api/1e9283a4cbdb4512967b3e7db9342a05/addproduct', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add product');
       }
 
-      setCartItems(updatedCartItems);
-    } else {
-      setCartItems([...cartItems, product]);
+      setProductData([...productData, product]);
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
+  };
+
+  const addToCart = async (product) => {
+    try {
+      const existingCartItemIndex = cartItems.findIndex(
+        (item) => item.name === product.name
+      );
+
+      if (existingCartItemIndex !== -1) {
+        const updatedCartItems = [...cartItems];
+        const existingCartItem = updatedCartItems[existingCartItemIndex];
+
+        for (const size in product.quantity) {
+          if (product.quantity.hasOwnProperty(size)) {
+            existingCartItem.quantity[size] =
+              (existingCartItem.quantity[size] || 0) +
+              product.quantity[size];
+          }
+        }
+        console.log('Updating cart item:', existingCartItem);
+        const response = await fetch(
+          `https://crudcrud.com/api/1e9283a4cbdb4512967b3e7db9342a05/cart/${existingCartItem._id}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(existingCartItem),
+          }
+        );
+        console.log('Update response:', response);
+        if (!response.ok) {
+          throw new Error('Failed to update cart item');
+        }
+
+        setCartItems(updatedCartItems);
+      } else {
+        const response = await fetch(
+          'https://crudcrud.com/api/1e9283a4cbdb4512967b3e7db9342a05/cart',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Failed to add item to cart');
+        }
+
+        setCartItems([...cartItems, product]);
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
   };
 
@@ -50,7 +136,7 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ productData, addProduct, cartItems, addToCart, calculateTotalQuantity, calculateTotalPrice }}>
+    <ProductContext.Provider value={{ productData, cartItems, addProduct, addToCart, calculateTotalQuantity, calculateTotalPrice }}>
       {children}
     </ProductContext.Provider>
   );

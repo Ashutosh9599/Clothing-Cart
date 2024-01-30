@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Cartitem from './Cartitem';
 import Modal from "../Modal/Modal";
 import { useProductContext } from '../Store/ProductContext';
 import "./Cart.css";
 
 const Cart = (props) => {
-  const { cartItems, calculateTotalPrice } = useProductContext();
+  const { cartItems, calculateTotalPrice, setCartItems, addToCart } = useProductContext();
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const response = await fetch('https://crudcrud.com/api/7c15cb5d9f2e4ecfa6b04fad762a70d4/cart');
+        if (!response.ok) {
+          throw new Error('Failed to fetch cart data');
+        }
+        const data = await response.json();
+        setCartItems(data);
+      } catch (error) {
+        console.error('Error fetching cart data:', error);
+      }
+    };
+    fetchCartData();
+  }, [setCartItems]);
 
   return (
     <Modal onClose={props.onClose} className="cart">

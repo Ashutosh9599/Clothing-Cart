@@ -5,20 +5,24 @@ import './ProductList.css';
 const ProductList = () => {
   const { productData, addToCart } = useProductContext();
 
-  const addToCartHandler = (productIndex, size) => {
-    const updatedProductData = [...productData];
-    const selectedProduct = updatedProductData[productIndex];
+  const addToCartHandler = async (productIndex, size) => {
+    try {
+      const selectedProduct = productData[productIndex];
 
-    if (selectedProduct.quantity[size] > 0) {
-      selectedProduct.quantity[size] -= 1;
+      if (selectedProduct.quantity[size] > 0) {
+        const updatedProductData = [...productData];
+        updatedProductData[productIndex].quantity[size] -= 1;
 
-      const cartItem = {
-        name: selectedProduct.name,
-        price: selectedProduct.price,
-        quantity: { [size]: 1 },
-      };
+        const cartItem = {
+          name: selectedProduct.name,
+          price: selectedProduct.price,
+          quantity: { [size]: 1 },
+        };
 
-      addToCart(cartItem);
+        await addToCart(cartItem);
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
   };
 

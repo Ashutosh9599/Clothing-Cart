@@ -35,9 +35,10 @@ const ProductForm = () => {
     });
   };
 
-  const handleAddProduct = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     addProduct(productData);
+    // Clear form data after submission
     setProductData({
       name: '',
       description: '',
@@ -53,7 +54,7 @@ const ProductForm = () => {
 
   return (
     <div className="product-form">
-      <form onSubmit={handleAddProduct}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>T-Shirt Name:</label>
           <input
